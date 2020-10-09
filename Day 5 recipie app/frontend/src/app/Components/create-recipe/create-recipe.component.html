@@ -1,0 +1,67 @@
+<form class="example-form" [formGroup]="recipeForm">
+  <mat-dialog-actions align="end" *ngIf="this.data">
+    <button mat-raised-button color="warn" [mat-dialog-close]="true"
+    cdkFocusInitial (click)="deleteRecipe()">Delete</button>
+  </mat-dialog-actions>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Ex. Pizza" name="name" id="name" formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Calories</mat-label>
+    <input matInput name="calories" id="calories" formControlName="calories">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Description</mat-label>
+    <textarea matInput name="description" id="description" formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" name="recipeCreatedDate" id="recipeCreatedDate"
+      formControlName="recipeCreatedDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+
+  <mat-chip-list #chipList aria-label="Ingredients selection">
+    <mat-chip *ngFor="let ingredient of ingredients" [selectable]="selectable" [removable]="removable"
+      (removed)="remove(ingredient)">
+      {{ingredient.name}}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input placeholder="Ingredients" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" id="ingredient">
+  </mat-chip-list>
+  <br />
+
+
+  <input class="ng-hide" id="input-file-id" multiple type="file" name="file" id="file" formControlName="file"
+    (change)="fileChange($event)" />
+
+  <br />
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" *ngIf="!this.data" cdkFocusInitial type="submit"
+      (click)="createRecipe()">Create</button>
+    <button mat-button [mat-dialog-close]="true" *ngIf="this.data" cdkFocusInitial type="submit"
+      (click)="updateRecipe()">Update</button>
+  </mat-dialog-actions>
+
+</form>
+
+<!-- <ejs-richtexteditor
+
+id='defaultRTE' [(value)]='value'
+[toolbarSettings]='tools' [quickToolbarSettings]='quickTools'> -->
+
+
+<ejs-richtexteditor id='defaultRTE' height="500" [formControl]="recipeForm.controls['pageBody']" [toolbarSettings]='tools' [quickToolbarSettings]='quickTools'>
+
+</ejs-richtexteditor>
+

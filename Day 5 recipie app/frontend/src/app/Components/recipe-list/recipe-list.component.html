@@ -1,0 +1,60 @@
+<div>
+
+<br />
+<div style="margin-left: 50px;">
+  <button style="height: 48px;width: 120px;" mat-raised-button color="primary" (click)="openDialog()">Create
+    Recipe</button>
+  <mat-form-field style="margin-left: 250px;" appearance="outline">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput type="search" placeholder="search here" (change)="searchByName()" [(ngModel)]="search"
+      class="search-input">
+  </mat-form-field>
+  <button (click)="searchByName()" style=" height: 48px;padding-top: 9px;width: 90px;" mat-r  aised-button
+    color="accent">Search</button>
+</div>
+
+<br />
+<mat-divider></mat-divider>
+
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element" (click)="openDialogForEdit(element._id)"> {{element.name}} </td>
+  </ng-container>
+  <!-- [routerLink]="['/edit', element._id]" -->
+
+
+  <ng-container matColumnDef="image">
+    <th mat-header-cell *matHeaderCellDef> Image </th>
+    <td mat-cell *matCellDef="let element"> <img [src]="element.imageUrl" style="height: 30px; width: 30px;" /> </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> Description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="calories">
+    <th mat-header-cell *matHeaderCellDef> Calories </th>
+    <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="recipeCreatedDate">
+    <th mat-header-cell *matHeaderCellDef> Created Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.recipeCreatedDate}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Ingredient">
+    <th mat-header-cell *matHeaderCellDef> Ingredient </th>
+    <td mat-cell *matCellDef="let element"> {{element.ingredient}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+</div>
